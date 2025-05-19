@@ -37,12 +37,26 @@ type ChunkChatCompletionResponse struct {
 	Type           string   `json:"type,omitempty"`            // File type, currently only image.
 	BelongsTo      string   `json:"belongs_to,omitempty"`      // File owner, user or assistant. This interface returns only assistant.
 	URL            string   `json:"url,omitempty"`             // File access address.
-	Metadata       Metadata `json:"metadata,omitempty"`        // Message metadata.
-	Audio          string   `json:"audio,omitempty"`           // The audio block after speech synthesis is encoded with Base64 text content.
-	Status         int      `json:"status,omitempty"`          // HTTP status code.
-	Code           string   `json:"code,omitempty"`            // Error code.
-	Message        string   `json:"message,omitempty"`         // Error message.
-	CreatedAt      int      `json:"created_at,omitempty"`      // Message creation timestamp, such as: 1705395332.
+	Data           struct {
+		ID                string         `json:"id,omitempty"`                  // Workflow execution ID.
+		NodeID            string         `json:"node_id,omitempty"`             // Workflow node ID.
+		NodeType          string         `json:"node_type,omitempty"`           // Workflow node type.
+		Title             string         `json:"title,omitempty"`               // Workflow node title.
+		Index             int            `json:"index,omitempty"`               // Workflow node index.
+		PredecessorNodeID string         `json:"predecessor_node_id,omitempty"` // Workflow node predecessor node ID.
+		Inputs            map[string]any `json:"inputs,omitempty"`              // Input content.
+		Outputs           map[string]any `json:"outputs,omitempty"`             // Output content.
+		Status            string         `json:"status,omitempty"`              // Execution status.
+		ElapsedTime       float64        `json:"elapsed_time,omitempty"`        // Execution time.
+		CreatedAt         int            `json:"created_at,omitempty"`          // Start time.
+		FinishedAt        int            `json:"finished_at,omitempty"`         // End time.
+	} `json:"data,omitempty"` // Details.
+	Metadata  Metadata `json:"metadata,omitempty"`   // Message metadata.
+	Audio     string   `json:"audio,omitempty"`      // The audio block after speech synthesis is encoded with Base64 text content.
+	Status    int      `json:"status,omitempty"`     // HTTP status code.
+	Code      string   `json:"code,omitempty"`       // Error code.
+	Message   string   `json:"message,omitempty"`    // Error message.
+	CreatedAt int      `json:"created_at,omitempty"` // Message creation timestamp, such as: 1705395332.
 }
 
 // CompletionResponse - Response body from the RunWorkflow endpoint in blocking mode.
